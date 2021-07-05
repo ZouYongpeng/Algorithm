@@ -408,7 +408,7 @@ class Solution {
 
         // 从 dp(2,2)开始遍历，最终得到dp(k,n)
         for(int i=2; i<=k; i++) {
-            for(int j=2; j<=n; n++) {
+            for(int j=2; j<=n; j++) {
                 // 对于当前有 j 层的情况下，每一层都遍历一次
                 for(int count=1; count <= j; count++) {
                     // 当前为count层，存在两种可能
@@ -433,7 +433,7 @@ class Solution {
 
 
 
-### 戳气球 （leetcode 312）
+### [戳气球](https://leetcode-cn.com/problems/burst-balloons/)
 
 > 有 n 个气球，编号为0 到 n - 1，每个气球上都标有一个数字，这些数字存在数组 nums 中。
 >
@@ -454,7 +454,7 @@ class Solution {
             points[i + 1] = nums[i];
         }
 
-        // dp[i][j] : 戳破 (i, j) 之前的气球得到的最多硬币
+        // dp[i][j] : 戳破 (i, j) 之间的气球得到的最多硬币
         int[][] dp = new int[n + 2][n + 2];
 
         // 对于 nums = [3,1,5,8]，且超出边界视为1
@@ -482,6 +482,43 @@ class Solution {
         }
 
         return dp[0][n+1];
+    }
+}
+```
+
+
+
+### 0-1背包问题
+
+>给你一个可装载重量为W的背包和N个物品，每个物品有重量和价值两个属性。其中第i个物品的重量为wt[i]，价值为val[i]，求背包最多能装的价值
+
+```java
+class Solution {
+    public int knapsack(int w, int n, int[] wt, int[] val) {
+        // dp[i][j] : 对于前 i 个物品，背包容量为 j 的情况下，装的最高价值
+        int[][] dp = new int[n + 1][w + 1];
+        
+        // base case : dp[0][...] = dp[...][0] = 0，表示什么都装不了
+        //       0    1    2    3    4    5
+        //       --------------------------
+        //  0  | 0    0    0    0    0    0
+        //  1  | 0    
+        //  2  | 0         
+        //  3  | 0                   
+        //  4  | 0                        ？
+        
+        for(int i = 1; i <= n; i++) {
+            for(int j = 1; i <= w; j++) {
+                if(w < wt[i - 1]) {          // 装不下了
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(
+                	    dp[i-1][j],                     // 选择不装
+                    	dp[i-1][w - wt[i-1]]+val[i-1]   // 选择装
+                	);
+                }
+            }
+        }
     }
 }
 ```
