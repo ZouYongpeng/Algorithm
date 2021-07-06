@@ -2,6 +2,167 @@
 
 ## 排序
 
+### 冒泡排序
+
+![BubbleSort](F:\GitHub\Algorithm\BubbleSort.gif)
+
+```java
+public class BubbleSort implements ISort {
+
+    @Override
+    public int[] sort(int[] array) {
+        int size = array.length;
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - 1 - i; j++) {
+                if (array[j] > array[j + 1]) {
+                    swap(array, j, j + 1);
+                }
+            }
+        }
+        return array;
+    }
+}
+```
+
+
+
+### 选择排序
+
+![SelectionSort](F:\GitHub\Algorithm\SelectionSort.gif)
+
+```java
+public class SelectionSort implements ISort {
+    @Override
+    public int[] sort(int[] array) {
+        int size = array.length;
+        for (int i = 0; i < size - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < size; j++) {
+                if (array[minIndex] > array[j]) {
+                    minIndex = j;
+                }
+            }
+            swap(array, i, minIndex);
+        }
+        return array;
+    }
+}
+```
+
+
+
+### 插入排序
+
+![InsertionSort](F:\GitHub\Algorithm\InsertionSort.gif)
+
+```java
+public class InsertionSort implements ISort {
+    @Override
+    public int[] sort(int[] array) {
+        int size = array.length;
+        for (int i = 1; i < size; i++) {
+            int current = array[i];
+            int preIndex = i - 1;
+            while (preIndex >= 0 && array[preIndex] > current) {
+                array[preIndex + 1] = array[preIndex];
+                preIndex--;
+            }
+            array[preIndex + 1] = current;
+        }
+        return array;
+    }
+}
+```
+
+
+
+### 希尔排序
+
+![ShellSort](F:\GitHub\Algorithm\ShellSort.gif)
+
+```java
+public class ShellSort implements ISort {
+    @Override
+    public int[] sort(int[] array) {
+        int size = array.length;
+        for (int interval = size / 2; interval > 0; interval/=2) {
+            for (int i = interval; i < size; i++) {
+                int j = i;
+                int current = array[i];
+                while (j >= interval && array[j - interval] > current) {
+                    array[j] = array[j - interval];
+                    j -= interval;
+                }
+                array[j] = current;
+            }
+        }
+        return array;
+    }
+}
+```
+
+
+
+### 归并排序
+
+![MergeSort](F:\GitHub\Algorithm\MergeSort.gif)
+
+![MergeSort](F:\GitHub\Algorithm\MergeSort.jpg)
+
+```java
+public class MergeSort implements ISort {
+    @Override
+    public int[] sort(int[] array) {
+        return mergeSoft(array, 0, array.length - 1);
+    }
+
+    private int[] mergeSoft(int[] array, int left, int right) {
+        int middle = (left + right) / 2;
+        if (left < right) {
+            // 先分别排序左右两边
+            mergeSoft(array, left, middle);
+            mergeSoft(array, middle + 1, right);
+            // 归并
+            merge(array, left, middle, right);
+        }
+        return array;
+    }
+
+    private void merge(int[] array, int left, int middle, int right) {
+        int[] tempArray = new int[right - left + 1];
+        int i = left;
+        int j = middle + 1;
+        int k = 0;
+
+        // 把较小的数先移到新数组中
+        while (i <= middle && j <= right) {
+            if (array[i] > array[j]) {
+                tempArray[k++] = array[j++];
+            } else {
+                tempArray[k++] = array[i++];
+            }
+        }
+
+        // 把左边剩余的数移入数组
+        while (i <= middle) {
+            tempArray[k++] = array[i++];
+        }
+
+        // 把右边边剩余的数移入数组
+        while (j <= right) {
+            tempArray[k++] = array[j++];
+        }
+
+        // 把新数组中的数覆盖array数组
+        for (int l = 0; l < tempArray.length; l++) {
+            array[left + l] = tempArray[l];
+        }
+    }
+}
+```
+
+
+
 
 
 ## 动态规划
