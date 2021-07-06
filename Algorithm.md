@@ -4,7 +4,7 @@
 
 ### 冒泡排序
 
-![BubbleSort](F:\GitHub\Algorithm\BubbleSort.gif)
+![BubbleSort](BubbleSort.gif)
 
 ```java
 public class BubbleSort implements ISort {
@@ -28,7 +28,7 @@ public class BubbleSort implements ISort {
 
 ### 选择排序
 
-![SelectionSort](F:\GitHub\Algorithm\SelectionSort.gif)
+![BubbleSort](BubbleSort.gif)
 
 ```java
 public class SelectionSort implements ISort {
@@ -53,7 +53,7 @@ public class SelectionSort implements ISort {
 
 ### 插入排序
 
-![InsertionSort](F:\GitHub\Algorithm\InsertionSort.gif)
+![InsertionSort](InsertionSort.gif)
 
 ```java
 public class InsertionSort implements ISort {
@@ -78,7 +78,7 @@ public class InsertionSort implements ISort {
 
 ### 希尔排序
 
-![ShellSort](F:\GitHub\Algorithm\ShellSort.gif)
+![ShellSort](ShellSort.gif)
 
 ```java
 public class ShellSort implements ISort {
@@ -105,9 +105,9 @@ public class ShellSort implements ISort {
 
 ### 归并排序
 
-![MergeSort](F:\GitHub\Algorithm\MergeSort.gif)
+![MergeSort](MergeSort.gif)
 
-![MergeSort](F:\GitHub\Algorithm\MergeSort.jpg)
+![MergeSort](MergeSort.jpg)
 
 ```java
 public class MergeSort implements ISort {
