@@ -163,6 +163,153 @@ public class MergeSort implements ISort {
 
 
 
+### 快速排序
+
+![QuickSort](QuickSort.gif)
+
+```java
+public class QuickSort implements ISort {
+    @Override
+    public int[] sort(int[] array) {
+        quickSort(array, 0, array.length - 1);
+        return array;
+    }
+
+    private void quickSort(int[] array, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        int pivot = array[left];
+        int i = left;
+        int j = right;
+        while (i < j) {
+            // j向左移，直到遇到比key小的值
+            while (i < j && pivot <= array[j]) {
+                j--;
+            }
+            // i向右移，直到遇到比key大的值
+            while (i < j && array[i] <= pivot) {
+                i++;
+            }
+            // 如果此时 i<j, 就表示 array[i] > pivot > array[j],
+            // 这时需要交换i和j指向的元素
+            if (i < j) {
+                swap(array, i, j);
+            }
+        }
+        // left 和 i 指向的元素交换
+        swap(array, left, i);
+        quickSort(array, left, i - 1);
+        quickSort(array, i + 1, right);
+    }
+}
+```
+
+
+
+### 堆排序
+
+![HeapSort](HeapSort.gif)
+
+```java
+public class HeapSort implements ISort {
+
+    private int mSize;
+
+    @Override
+    public int[] sort(int[] array) {
+        mSize = array.length;
+        buildMaxHeap(array);
+
+        // 因为R[1]为最大值，将堆顶元素R[1]与最后一个元素R[n]交换，
+        // 此时得到新的无序区(R1,R2,……Rn-1)和新的有序区(Rn),
+        // 且满足R[1,2…n-1]<=R[n]；
+        for (int i = array.length - 1; i > 0; i--) {
+            swap(array, 0, i);
+            mSize--;
+            heapify(array, 0);
+        }
+        return array;
+    }
+
+    /**
+     * 将初始待排序关键字序列(R1,R2….Rn)构建成大顶堆，
+     * 此堆为初始的无序区，且R1为最大值
+     * @param array
+     */
+    private void buildMaxHeap(int[] array) {
+        for (int i = mSize / 2; i >= 0 ; i--) {
+            heapify(array, i);
+        }
+    }
+
+    private void heapify(int[] array, int i) {
+        int max = i;
+        int left = 2*i+1;
+        int right = 2*i+2;
+
+        if (left < mSize && array[left] > array[max]) {
+            max = left;
+        }
+        if (right < mSize && array[right] > array[max]) {
+            max = right;
+        }
+
+        if (max != i) {
+            swap(array, i, max);
+            heapify(array, max);
+        }
+    }
+}
+```
+
+
+
+### 计数排序
+
+![CountingSort](CountingSort.gif)
+
+```java
+public class CountingSort implements ISort {
+    @Override
+    public int[] sort(int[] array) {
+        // 确定数组array的值的范围
+        int min = array[0];
+        int max = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < min) {
+                min = array[i];
+            }
+            if (array[i] > max) {
+                max = array[i];
+            }
+        }
+        // 开始排序
+        if (min != max) {
+            sort(array, min, max);
+        }
+        return array;
+    }
+
+    private void sort(int[] array, int min, int max) {
+        int[] bucket = new int[max - min + 2];
+
+        for (int i = 0; i < array.length; i++) {
+            bucket[array[i]]++;
+        }
+
+        int index = 0;
+        for (int i = 0; i < bucket.length; i++) {
+            while (bucket[i] > 0) {
+                array[index++] = i;
+                bucket[i]--;
+            }
+        }
+
+    }
+}
+```
+
 
 
 ## 动态规划
